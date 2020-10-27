@@ -1,0 +1,27 @@
+{
+  "vendor": "vtex",
+  "name": "express-promotion",
+  "version": "0.0.0",
+  "title": "express-promotion",
+  "description": "express-promotion",
+  "defaultLocale": "en",
+  "builders": {
+    "store": "0.x",
+    "react": "3.x"
+  },
+  "mustUpdateAt": "2019-04-02",
+  "scripts": {
+    "postrelease": "vtex publish --verbose"
+  },
+  "dependencies": {
+    "vtex.styleguide": "9.x",
+    "vtex.css-handles": "0.x",
+    "vtex.store-resources": "0.x",
+    "vtex.device-detector": "0.x",
+    "vtex.search-graphql": "0.x",
+    "vtex.product-summary": "2.x",
+    "vtex.native-types": "0.x",
+    "vtex.store-graphql": "2.x"
+  },
+  "$schema": "https://raw.githubusercontent.com/vtex/node-vtex-api/master/gen/manifest.schema"
+}

@@ -1,0 +1,9 @@
+{
+  "express-promotion": {
+    "component": "ExpressPromotion",
+    "composition": "children",
+    "content": {
+      "$ref": "app:vtex.express-promotion#/definitions/Image"
+    }
+  }
+}

@@ -1,0 +1,66 @@
+query getSku($value: ID!) {
+  product(identifier: { field: sku, value: $value })
+    @context(provider: "vtex.search-graphql") {
+    brand
+    brandId
+    cacheId
+    categoryId
+    description
+    items {
+      itemId
+      name
+      nameComplete
+      complementName
+      ean
+      referenceId {
+        Key
+        Value
+      }
+      measurementUnit
+      unitMultiplier
+      kitItems {
+        itemId
+        amount
+      }
+      images {
+        cacheId
+        imageId
+        imageLabel
+        imageTag
+        imageUrl
+        imageText
+      }
+      variations {
+        name
+      }
+      estimatedDateArrival
+      sellers {
+        sellerId
+        sellerName
+        addToCartLink
+        sellerDefault
+        commertialOffer {
+          Price
+          ListPrice
+          spotPrice
+          PriceWithoutDiscount
+          RewardValue
+          PriceValidUntil
+          AvailableQuantity
+          Tax
+          taxPercentage
+          CacheVersionUsedToCallCheckout
+        }
+      }
+    }
+    link
+    linkText
+    productId
+    productName
+    productReference
+    titleTag
+    metaTagDescription
+    jsonSpecifications
+    releaseDate
+  }
+}

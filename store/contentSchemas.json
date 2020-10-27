@@ -1,0 +1,17 @@
+{
+    "definitions": {
+        "Image": {
+            "title": "admin/editor.store-image.title",
+            "properties": {
+                "buttonImage": {
+                    "title": "Button Image",
+                    "$ref": "app:vtex.native-types#/definitions/url",
+                    "default": "",
+                    "widget": {
+                        "ui:widget": "image-uploader"
+                    }
+                }
+            }
+        }
+    }
+}
