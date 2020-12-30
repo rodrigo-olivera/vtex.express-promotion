@@ -1,10 +1,7 @@
-/* eslint-disable import/no-nodejs-modules */
-/* eslint-disable no-console */
 import React, { useState } from 'react'
 import { injectIntl } from 'react-intl'
 import { useQuery } from 'react-apollo'
 import { useCssHandles } from 'vtex.css-handles'
-//import { useDevice } from 'vtex.device-detector'
 import { ExpressPromotionProps } from './typings/global'
 import GET_SKU from './graphql/getSku.graphql'
 import { ButtonWithIcon, IconClose } from 'vtex.styleguide'
@@ -21,41 +18,46 @@ const CSS_HANDLES = [
 ] as const
 
 const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
+  active = false,
   buttonHeight = 'auto',
   buttonWidth = 'auto',
   buttonBackgroundColor = 'transparent',
   buttonImage,
   buttonText,
   buttonTextColor,
-  skuId,
-  title,
-  active = false,
-  endDate,
-  startDate,
+  products
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
-  //const { isMobile } = useDevice()
+
+  const now = new Date()
+  const p = products?.filter(({ startDate }) => new Date(startDate).getTime() <= now.getTime())
+    .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).shift() ??
+  {
+    skuId: null,
+    title: null,
+    endDate: now,
+    startDate: new Date().setDate(now.getDate() + 1)
+  }
 
   const [openItem, setOpenItem] = useState(false)
   const { data, error, loading } = useQuery(GET_SKU, {
     variables: {
-      value: skuId,
+      value: p.skuId,
     },
     errorPolicy: 'ignore',
     fetchPolicy: 'no-cache',
   })
 
-  const now = new Date()
-  const startDateI = new Date(startDate)
-  const endDateI = new Date(endDate)
+  const startDateI = new Date(p.startDate)
+  const endDateI = new Date(p.endDate)
 
   const showByDate = () => {
-    if (!endDate && !startDate) return true
+    if (!p.endDate && !p.startDate) return true
     if (endDateI > now && startDateI < now) return true
     return false
   }
 
-  if (!data || error || !active || loading || !showByDate()) return null
+  if (!data || !data.product || error || !active || loading || !showByDate()) return null
 
   const item = data.product
 
@@ -69,7 +71,7 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
     <div className={`fixed z-999 left-0 bottom-0 ${handles.container}`}>
       <div className={`pa2 ${openItem && 'dn'} ${handles.openButton}`}>
         <button
-          className={`w4 h-auto`} 
+          className={`w4 h-auto`}
           onClick={toggle}
           style={{
             border: 'none',
@@ -89,7 +91,7 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
         className={`bg-white pa6 ${!openItem && 'dn'} 
         ${handles.summaryContainer}`}
       >
-        <span className={`${handles.title}`}>{title}</span>
+        <span className={`${handles.title}`}>{p.title}</span>
         <div
           className={`absolute z-999 top-0 right-0 pa2 ${handles.closeButton}`}
         >
@@ -100,7 +102,7 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
           />
         </div>
         <ExtensionPoint
-          id={`product-summary.shelf`}
+          id={`product-summary.shelf#express`}
           product={product}
           className="pa6"
         />
@@ -108,8 +110,6 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
     </div>
   )
 }
-
-//const messages = defineMessages({})
 
 //This is the schema form that will render the editable props on SiteEditor
 ExpressPromotion.schema = {
@@ -119,24 +119,6 @@ ExpressPromotion.schema = {
     active: {
       title: 'Active',
       type: 'boolean',
-    },
-    skuId: {
-      title: 'SKU ID',
-      type: 'number',
-    },
-    title: {
-      title: 'Title',
-      type: 'string',
-    },
-    startDate: {
-      title: 'Start Date',
-      type: 'string',
-      format: 'date-time',
-    },
-    endDate: {
-      title: 'End Date',
-      type: 'string',
-      format: 'date-time',
     },
     buttonHeight: {
       title: 'Button Height',
@@ -158,7 +140,33 @@ ExpressPromotion.schema = {
       title: 'Buton Text Color',
       type: 'string',
     },
-  },
+    products: {
+      title: 'Prducts',
+      type: "array",
+      items: {
+        properties: {
+          skuId: {
+            title: 'SKU ID',
+            type: 'number',
+          },
+          title: {
+            title: 'Title',
+            type: 'string',
+          },
+          startDate: {
+            title: 'Start Date',
+            type: 'string',
+            format: 'date-time',
+          },
+          endDate: {
+            title: 'End Date',
+            type: 'string',
+            format: 'date-time',
+          }
+        }
+      },
+    },
+  }
 }
 
 export default injectIntl(ExpressPromotion)

@@ -9,17 +9,20 @@ export interface CountdownRibbonProps {
   intl: any
 }
 
-export interface ExpressPromotionProps {
-  buttonTextColor:string
-  buttonHeight:string
-  buttonWidth:string
-  buttonBackgroundColor:string
-  buttonImage: string
-  buttonText:string
+export interface product {
   skuId?: number
   title?: string
-  active?: boolean
   endDate: Date
   startDate: Date
-  intl: any
+}
+
+export interface ExpressPromotionProps {
+  active?: boolean = false
+  buttonTextColor: string
+  buttonHeight: string
+  buttonWidth: string
+  buttonBackgroundColor: string
+  buttonImage: string
+  buttonText: string
+  products?: product[]
 }

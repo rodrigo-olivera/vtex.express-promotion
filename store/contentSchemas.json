@@ -1,7 +1,7 @@
 {
     "definitions": {
         "Image": {
-            "title": "admin/editor.store-image.title",
+            "title": "Express Promotion",
             "properties": {
                 "buttonImage": {
                     "title": "Button Image",
