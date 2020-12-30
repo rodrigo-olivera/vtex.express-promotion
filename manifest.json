@@ -1,7 +1,7 @@
 {
   "vendor": "vtex",
   "name": "express-promotion",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "title": "express-promotion",
   "description": "express-promotion",
   "defaultLocale": "en",
