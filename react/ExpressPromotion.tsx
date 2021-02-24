@@ -25,6 +25,8 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
   buttonImage,
   buttonText,
   buttonTextColor,
+  title,
+  titleB,
   products
 }) => {
   const handles = useCssHandles(CSS_HANDLES)
@@ -34,9 +36,6 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
     .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).shift() ??
   {
     skuId: null,
-    icon: undefined,
-    title: null,
-    titleB: null,
     endDate: now,
     startDate: new Date().setDate(now.getDate() + 1)
   }
@@ -94,9 +93,9 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
         ${handles.summaryContainer}`}
       >
         <div className="fl w-100 pa2 vtex-lightning-offer-title">
-          {p.icon ? <img className="vtex-logo-offer" src={p.icon} /> : null}
-          <span className="vtex-normal-offer">{p.title}</span>
-          <span className="vtex-lightning-offer-bold">{p.titleB}</span>
+          {buttonImage ? <img className="vtex-logo-offer" src={buttonImage} /> : null}
+          <span className="vtex-normal-offer">{title}</span>
+          <span className="vtex-lightning-offer-bold">{titleB}</span>
         </div>
 
         <div
@@ -147,6 +146,14 @@ ExpressPromotion.schema = {
       title: 'Buton Text Color',
       type: 'string',
     },
+    title: {
+      title: 'Title',
+      type: 'string',
+    },
+    titleB: {
+      title: 'Title Bold',
+      type: 'string',
+    },
     products: {
       title: 'Prducts',
       type: "array",
@@ -155,18 +162,6 @@ ExpressPromotion.schema = {
           skuId: {
             title: 'SKU ID',
             type: 'number',
-          },
-          icon: {
-            title: 'Icon URL',
-            type: 'string',
-          },
-          title: {
-            title: 'Title',
-            type: 'string',
-          },
-          titleB: {
-            title: 'Title Bold',
-            type: 'string',
           },
           startDate: {
             title: 'Start Date',
