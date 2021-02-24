@@ -11,7 +11,9 @@ export interface CountdownRibbonProps {
 
 export interface product {
   skuId?: number
+  icon?: string
   title?: string
+  titleB?: string
   endDate: Date
   startDate: Date
 }

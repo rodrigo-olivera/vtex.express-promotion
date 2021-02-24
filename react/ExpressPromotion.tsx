@@ -34,7 +34,9 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
     .sort((a, b) => new Date(b.startDate).getTime() - new Date(a.startDate).getTime()).shift() ??
   {
     skuId: null,
+    icon: undefined,
     title: null,
+    titleB: null,
     endDate: now,
     startDate: new Date().setDate(now.getDate() + 1)
   }
@@ -88,10 +90,15 @@ const ExpressPromotion: StorefrontFunctionComponent<ExpressPromotionProps> = ({
         </button>
       </div>
       <div
-        className={`bg-white pa6 ${!openItem && 'dn'} 
+        className={`bg-white ${!openItem && 'dn'} 
         ${handles.summaryContainer}`}
       >
-        <span className={`${handles.title}`}>{p.title}</span>
+        <div className="fl w-100 pa2 vtex-lightning-offer-title">
+          {p.icon ? <img className="vtex-logo-offer" src={p.icon} /> : null}
+          <span className="vtex-normal-offer">{p.title}</span>
+          <span className="vtex-lightning-offer-bold">{p.titleB}</span>
+        </div>
+
         <div
           className={`absolute z-999 top-0 right-0 pa2 ${handles.closeButton}`}
         >
@@ -149,8 +156,16 @@ ExpressPromotion.schema = {
             title: 'SKU ID',
             type: 'number',
           },
+          icon: {
+            title: 'Icon URL',
+            type: 'string',
+          },
           title: {
             title: 'Title',
+            type: 'string',
+          },
+          titleB: {
+            title: 'Title Bold',
             type: 'string',
           },
           startDate: {
